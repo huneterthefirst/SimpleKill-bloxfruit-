@@ -8,24 +8,6 @@ local Net = ReplicatedStorage:WaitForChild("Modules"):WaitForChild("Net")
 local RegisterAttackRemote = Net:WaitForChild("RE/RegisterAttack")
 local RegisterHitRemote = Net:WaitForChild("RE/RegisterHit")
 
--- Disguised secret message (split like a session token)
-local sessionPartA = "77\\97\\100\\101\\32\\98\\121"
-local sessionPartB = "32\\77\\114\\46\\32\\67\\111\\100\\101"
-local sessionPartC = "\\114\\32\\109\\121\\32\\100\\105\\115"
-local sessionPartD = "\\99\\111\\114\\100\\32\\117\\115\\101"
-local sessionPartE = "\\114\\110\\97\\109\\101\\32\\105\\115"
-local sessionPartF = "\\32\\100\\101\\97\\116\\104\\108\\121"
-local sessionPartG = "\\95\\49\\49\\"
-
-local fullSessionToken = sessionPartA..sessionPartB..sessionPartC..sessionPartD..sessionPartE..sessionPartF..sessionPartG
-
-local secret = ""
-for num in string.gmatch(fullSessionToken, "(%d+)\\") do
-    secret = secret .. string.char(tonumber(num))
-end
-
-print(secret) -- Optional: remove if stealth is necessary
-
 -- Attack all NPCs in range
 local function AttackNpcsInRange(range, mode)
     local enemiesFolder = Workspace:FindFirstChild("Enemies")
