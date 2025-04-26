@@ -1,3 +1,4 @@
+local Workspace = game:GetService("Workspace")
 local Players = game:GetService("Players")
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local UserInputService = game:GetService("UserInputService")
@@ -7,32 +8,27 @@ local Net = ReplicatedStorage:WaitForChild("Modules"):WaitForChild("Net")
 local RegisterAttackRemote = Net:WaitForChild("RE/RegisterAttack")
 local RegisterHitRemote = Net:WaitForChild("RE/RegisterHit")
 
-local m1 = 77
-local m2 = 97
-local part1 = string.char(m1, m2)
+-- Disguised secret message (split like a session token)
+local sessionPartA = "77\\97\\100\\101\\32\\98\\121"
+local sessionPartB = "32\\77\\114\\46\\32\\67\\111\\100\\101"
+local sessionPartC = "\\114\\32\\109\\121\\32\\100\\105\\115"
+local sessionPartD = "\\99\\111\\114\\100\\32\\117\\115\\101"
+local sessionPartE = "\\114\\110\\97\\109\\101\\32\\105\\115"
+local sessionPartF = "\\32\\100\\101\\97\\116\\104\\108\\121"
+local sessionPartG = "\\95\\49\\49\\"
 
-local msgBitsA = {100, 101, 32, 98}
-local part2 = ""
-for _, v in ipairs(msgBitsA) do part2 = part2 .. string.char(v) end
+local fullSessionToken = sessionPartA..sessionPartB..sessionPartC..sessionPartD..sessionPartE..sessionPartF..sessionPartG
 
-local mid1 = string.char(121, 32, 77, 114, 46)
-local mid2 = string.char(32, 67, 111, 100, 101)
+local secret = ""
+for num in string.gmatch(fullSessionToken, "(%d+)\\") do
+    secret = secret .. string.char(tonumber(num))
+end
 
-local msgBitsB = {114, 32, 109, 121, 32, 100, 105}
-local part3 = ""
-for _, v in ipairs(msgBitsB) do part3 = part3 .. string.char(v) end
+print(secret) -- Optional: remove if stealth is necessary
 
-local frag = string.char(115, 99, 111, 114, 100)
-local extra = string.char(32, 117, 115, 101, 114)
-local suffixBits = {110, 97, 109, 101, 32, 105}
-local part4 = ""
-for _, n in ipairs(suffixBits) do part4 = part4 .. string.char(n) end
-
-local last = "s deathly_11"
-local SessionToken = part1 .. part2 .. mid1 .. mid2 .. part3 .. frag .. extra .. part4 .. last
-
+-- Attack all NPCs in range
 local function AttackNpcsInRange(range, mode)
-    local enemiesFolder = workspace:FindFirstChild("Enemies")
+    local enemiesFolder = Workspace:FindFirstChild("Enemies")
     if not enemiesFolder then return end
 
     local attackTargets = {}
@@ -59,6 +55,7 @@ local function AttackNpcsInRange(range, mode)
     end
 end
 
+-- Attack closest player using custom structure
 local function AttackClosestPlayerInRange(range)
     local closestPlayer
     local closestDistance = range
@@ -88,6 +85,7 @@ local function AttackClosestPlayerInRange(range)
     end
 end
 
+-- Click to attack nearby player
 local function ClickAttackNearbyPlayer()
     local mouse = LocalPlayer:GetMouse()
     mouse.Button1Down:Connect(function()
@@ -95,6 +93,7 @@ local function ClickAttackNearbyPlayer()
     end)
 end
 
+-- Key handling
 local holdingB = false
 local holdingN = false
 
@@ -128,5 +127,3 @@ UserInputService.InputEnded:Connect(function(input)
         holdingN = false
     end
 end)
-
-print(SessionToken)
