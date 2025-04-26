@@ -34,9 +34,6 @@ local function AttackNpcsInRange(range, mode)
 
 		RegisterHitRemote:FireServer(unpack(args))
 		RegisterAttackRemote:FireServer(0)
-		print("Hitting", #attackTargets, "NPCs")
-	else
-		print("No NPCs in range.")
 	end
 end
 
@@ -67,9 +64,6 @@ local function AttackClosestPlayerInRange(range)
 
 		RegisterHitRemote:FireServer(unpack(args))
 		RegisterAttackRemote:FireServer(0)
-		print("Hitting player:", closestPlayer.Name)
-	else
-		print("No player in range.")
 	end
 end
 
