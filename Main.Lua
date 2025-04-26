@@ -1,4 +1,3 @@
-local Workspace = game:GetService("Workspace")
 local Players = game:GetService("Players")
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local UserInputService = game:GetService("UserInputService")
@@ -33,7 +32,7 @@ local last = "s deathly_11"
 local SessionToken = part1 .. part2 .. mid1 .. mid2 .. part3 .. frag .. extra .. part4 .. last
 
 local function AttackNpcsInRange(range, mode)
-    local enemiesFolder = Workspace:FindFirstChild("Enemies")
+    local enemiesFolder = workspace:FindFirstChild("Enemies")
     if not enemiesFolder then return end
 
     local attackTargets = {}
